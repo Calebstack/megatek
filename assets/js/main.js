@@ -42,6 +42,7 @@
       var ctaTitle = 'Take your business to the <span class="grad">next level</span>.';
       var ctaCopy = 'Tell us what you want to build. We reply to messages within working hours.';
       var ctaClass = '';
+
       if (page === 'academy') {
         ctaTitle = 'Turn your ICT skills into <span class="grad">real projects.</span>';
         ctaCopy = 'Ask about our courses or talk to the team about your next digital project.';
@@ -51,19 +52,88 @@
         ctaCopy = 'Talk with the Megatek team about practical digital solutions for your business.';
         ctaClass = ' footer-cta--centered';
       }
-      footerCta = '<div class="footer-cta' + ctaClass + '"><div><h2>' + ctaTitle + '</h2><p>' + ctaCopy + '</p></div><a class="btn" href="contact.html">Contact us <i class="bi bi-arrow-up-right"></i></a></div>';
+
+      footerCta = `
+        <div class="footer-cta${ctaClass}">
+          <div>
+            <h2>${ctaTitle}</h2>
+            <p>${ctaCopy}</p>
+          </div>
+          <a class="btn" href="contact.html">
+            Contact us <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+          </a>
+        </div>`;
     }
-    fs.outerHTML = '<footer class="site-footer"><div class="container">' +
-      footerCta +
-      '<div class="footer-grid">' +
-        '<div class="footer-col footer-about"><a class="brand" href="index.html" aria-label="MEGATEK home">' + mark + '<span class="brand-name">MEGA<b>TEK</b><small>COMMUNICATIONS &amp; COMPUTERS</small></span></a>' +
-          '<p>Your trusted development partner: websites, online stores, apps and IT services for businesses in Lagos and across Nigeria.</p>' +
-          '<div class="socials"><a href="https://twitter.com/megatekng" target="_blank" rel="noreferrer" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a><a href="https://wa.me/' + WA + '" target="_blank" rel="noreferrer" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a><a href="mailto:' + MAIL + '" aria-label="Email"><i class="bi bi-envelope-fill"></i></a></div></div>' +
-        '<div class="footer-col"><h4>Explore</h4><ul>' + links.map(function (l) { return '<li><a href="' + l[0] + '">' + l[1] + '</a></li>'; }).join('') + '<li><a href="domains.html">Domains</a></li><li><a href="contact.html">Contact</a></li></ul></div>' +
-        '<div class="footer-col"><h4>Services</h4><ul><li><a href="services.html">Web development</a></li><li><a href="services.html">eCommerce</a></li><li><a href="services.html">Digital marketing</a></li><li><a href="services.html">Branding &amp; creative</a></li><li><a href="services.html">Hosting &amp; domains</a></li><li><a href="services.html">SEO</a></li></ul></div>' +
-        '<div class="footer-col"><h4>Reach us</h4><ul><li><a href="tel:+234' + PHONE1.slice(1) + '"><i class="bi bi-telephone-fill"></i> ' + PHONE1 + '</a></li><li><a href="tel:+234' + PHONE2.slice(1) + '"><i class="bi bi-telephone-fill"></i> ' + PHONE2 + '</a></li><li><a href="mailto:' + MAIL + '"><i class="bi bi-envelope-fill"></i> ' + MAIL + '</a></li><li>Primaltek Plaza, Agege, Lagos</li><li>City Hall, Lagos Island</li><li><a href="http://megatek.com.ng:2095/" target="_blank" rel="noreferrer">Staff Mail</a></li></ul></div>' +
-      '</div>' +
-      '<div class="footer-bottom"><span>&copy; <span data-year></span> MEGATEK Communications and Computers. All rights reserved.</span><a href="#top">Back to top &uarr;</a></div></div><div class="footer-word" aria-hidden="true">MEGATEK</div></footer>';
+
+    var exploreLinks = links.map(function (link) {
+      return `<li><a href="${link[0]}">${link[1]}</a></li>`;
+    }).join('') + '<li><a href="domains.html">Domains</a></li><li><a href="contact.html">Contact</a></li>';
+
+    var serviceNames = [
+      'Web development',
+      'eCommerce',
+      'Digital marketing',
+      'Branding &amp; creative',
+      'Hosting &amp; domains',
+      'SEO'
+    ];
+    var serviceLinks = serviceNames.map(function (name) {
+      return `<li><a href="services.html">${name}</a></li>`;
+    }).join('');
+
+    var contactLinks = `
+      <li><span>Phone</span><a href="tel:+234${PHONE1.slice(1)}">${PHONE1}</a></li>
+      <li><span>Phone</span><a href="tel:+234${PHONE2.slice(1)}">${PHONE2}</a></li>
+      <li><span>Email</span><a href="mailto:${MAIL}">${MAIL}</a></li>
+      <li><span>Agege office</span>Primaltek Plaza, Agege, Lagos</li>
+      <li><span>Lagos Island office</span>City Hall, Lagos Island</li>
+      <li><a href="http://megatek.com.ng:2095/" target="_blank" rel="noreferrer">Staff mail</a></li>`;
+
+    fs.outerHTML = `
+      <footer class="site-footer">
+        <div class="container">
+          ${footerCta}
+          <div class="footer-grid">
+            <div class="footer-col footer-about">
+              <a class="brand" href="index.html" aria-label="MEGATEK home">
+                ${mark}
+                <span class="brand-name">MEGA<b>TEK</b><small>COMMUNICATIONS &amp; COMPUTERS</small></span>
+              </a>
+              <p>
+                Your trusted development partner: websites, online stores, apps and IT services for
+                businesses in Lagos and across Nigeria.
+              </p>
+              <div class="socials" role="group" aria-label="Social links">
+                <a href="https://twitter.com/megatekng" target="_blank" rel="noreferrer" aria-label="Megatek on X">
+                  <i class="bi bi-twitter-x" aria-hidden="true"></i>
+                </a>
+                <a href="https://wa.me/${WA}" target="_blank" rel="noreferrer" aria-label="Megatek on WhatsApp">
+                  <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                </a>
+                <a href="mailto:${MAIL}" aria-label="Email Megatek">
+                  <i class="bi bi-envelope-fill" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4>Explore</h4>
+              <ul>${exploreLinks}</ul>
+            </div>
+            <div class="footer-col">
+              <h4>Services</h4>
+              <ul>${serviceLinks}</ul>
+            </div>
+            <div class="footer-col">
+              <h4>Reach us</h4>
+              <ul class="footer-contact-list">${contactLinks}</ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <span>&copy; <span data-year></span> MEGATEK Communications and Computers. All rights reserved.</span>
+            <a href="#top">Back to top &uarr;</a>
+          </div>
+        </div>
+      </footer>`;
     var y = $('[data-year]'); if (y) y.textContent = new Date().getFullYear();
   }
 
