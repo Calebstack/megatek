@@ -31,13 +31,30 @@
   if (tg) tg.addEventListener('click', function () {
     var o = nav.classList.toggle('is-open'); tg.classList.toggle('is-open', o);
     tg.setAttribute('aria-expanded', o ? 'true' : 'false');
+    tg.setAttribute('aria-label', o ? 'Close menu' : 'Open menu');
   });
 
   /* ---------- Footer ---------- */
   var fs = $('[data-site-footer]');
   if (fs) {
+    var footerCta = '';
+    if (['index', 'services', 'portfolio', 'products', 'about'].indexOf(page) === -1) {
+      var ctaTitle = 'Take your business to the <span class="grad">next level</span>.';
+      var ctaCopy = 'Tell us what you want to build. We reply to messages within working hours.';
+      var ctaClass = '';
+      if (page === 'academy') {
+        ctaTitle = 'Turn your ICT skills into <span class="grad">real projects.</span>';
+        ctaCopy = 'Ask about our courses or talk to the team about your next digital project.';
+        ctaClass = ' footer-cta--centered';
+      } else if (page === 'blog') {
+        ctaTitle = 'Have a question about <span class="grad">something you read?</span>';
+        ctaCopy = 'Talk with the Megatek team about practical digital solutions for your business.';
+        ctaClass = ' footer-cta--centered';
+      }
+      footerCta = '<div class="footer-cta' + ctaClass + '"><div><h2>' + ctaTitle + '</h2><p>' + ctaCopy + '</p></div><a class="btn" href="contact.html">Contact us <i class="bi bi-arrow-up-right"></i></a></div>';
+    }
     fs.outerHTML = '<footer class="site-footer"><div class="container">' +
-      '<div class="footer-cta"><div><h2>Take your business to the <span class="grad">next level</span>.</h2><p>Tell us what you want to build. We reply to messages within working hours.</p></div><a class="btn" href="contact.html">Contact us <i class="bi bi-arrow-up-right"></i></a></div>' +
+      footerCta +
       '<div class="footer-grid">' +
         '<div class="footer-col footer-about"><a class="brand" href="index.html" aria-label="MEGATEK home">' + mark + '<span class="brand-name">MEGA<b>TEK</b><small>COMMUNICATIONS &amp; COMPUTERS</small></span></a>' +
           '<p>Your trusted development partner: websites, online stores, apps and IT services for businesses in Lagos and across Nigeria.</p>' +
@@ -244,7 +261,7 @@
 
   /* ---------- Tilt + spotlight + magnetic ---------- */
   if (fine && !reduce) {
-    $$('.bento-item, .work, .post, .course, .principle, .office, .tld, .feat, .contact-card, .opt, .stat').forEach(function (el) {
+    $$('.bento-item, .prod-card, .work, .post, .course, .principle, .office, .tld, .feat, .contact-card, .opt, .stat').forEach(function (el) {
       if (el.classList.contains('opt') || el.classList.contains('stat')) { return; }
       el.setAttribute('data-tilt', '');
       var s = d.createElement('span'); s.className = 'spot'; s.setAttribute('aria-hidden', 'true'); el.appendChild(s);
